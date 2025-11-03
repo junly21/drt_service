@@ -58,7 +58,7 @@ export default function RootLayout({
             </nav>
           </div>
         </header>
-        <main className="mx-auto max-w-[1920px] min-h-[calc(100vh-64px-52px)] px-6 py-6">
+        <main className="mx-auto max-w-[1920px] min-h-[calc(100vh-64px-72px)] px-6 py-6">
           {children}
         </main>
         <Footer />
