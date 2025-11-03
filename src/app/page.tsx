@@ -1,65 +1,71 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <section className="flex flex-col gap-8">
+      <div className="rounded-lg border p-8 bg-white">
+        <h2 className="text-2xl font-bold mb-2">전라남도 도서지역 특화 DRT</h2>
+        <p className="text-muted-foreground">
+          차량관리, 노선관리, 정류장관리, 배차관리, 모니터링, 호출기록, 호출통계
+          기능을 제공하는 버스 모니터링/운영 서비스입니다.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a
+          href="/vehicle"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">차량관리</h3>
+          <p className="text-sm text-muted-foreground">
+            차량 기본 정보 및 상태 관리 (ag-Grid)
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </a>
+        <a
+          href="/route"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">노선관리</h3>
+          <p className="text-sm text-muted-foreground">
+            노선 정보/구간 관리 (ag-Grid)
+          </p>
+        </a>
+        <a
+          href="/stop"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">정류장관리</h3>
+          <p className="text-sm text-muted-foreground">
+            정류장 정보 관리 (ag-Grid)
+          </p>
+        </a>
+        <a
+          href="/dispatch"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">배차관리</h3>
+          <p className="text-sm text-muted-foreground">
+            배차 계획/이력 관리 (ag-Grid)
+          </p>
+        </a>
+        <a
+          href="/monitoring"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">모니터링</h3>
+          <p className="text-sm text-muted-foreground">
+            지도에서 버스 이동경로 실시간 표출
+          </p>
+        </a>
+        <a
+          href="/calls"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">호출기록</h3>
+          <p className="text-sm text-muted-foreground">
+            호출 이력 조회 (ag-Grid)
+          </p>
+        </a>
+        <a
+          href="/stats"
+          className="block rounded-lg border p-6 bg-white hover:shadow">
+          <h3 className="font-semibold mb-1">호출통계</h3>
+          <p className="text-sm text-muted-foreground">
+            차트 기반 호출 통계 시각화
+          </p>
+        </a>
+      </div>
+    </section>
   );
 }
