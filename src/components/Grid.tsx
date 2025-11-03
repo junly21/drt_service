@@ -1,23 +1,22 @@
 import { AgGridReact } from "ag-grid-react";
-import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import {
+  ModuleRegistry,
+  AllCommunityModule,
+  type ColDef,
+  type GridOptions,
+} from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 // Register AG Grid Community modules once
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface GridProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rowData: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columnDefs: any[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  pinnedBottomRowData?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  gridRef: React.RefObject<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  gridOptions?: any;
+  rowData: Array<Record<string, unknown>>;
+  columnDefs: ColDef[];
+  pinnedBottomRowData?: Array<Record<string, unknown>>;
+  gridRef: React.RefObject<AgGridReact<Record<string, unknown>> | null>;
+  gridOptions?: GridOptions;
   height?: number | string; // 높이 props 추가
   enableNumberColoring?: boolean; // 숫자 색상 적용 여부
 }
@@ -31,6 +30,21 @@ export default function Grid({
   height = "100%", // 기본값
   enableNumberColoring = false, // 기본값
 }: GridProps) {
+  // 공통 기본 컬럼 설정: 최소 너비 유지, 과도한 확장 방지, 필요 시 가로 스크롤 허용
+  const baseDefaultColDef = {
+    sortable: false,
+    filter: false,
+    resizable: true,
+    suppressMovable: true,
+    // 화면이 남으면 적당히 채우되, 각 컬럼의 확장 상한을 둬서 과도한 확장을 방지
+    flex: 1,
+    minWidth: 80,
+    maxWidth: 240,
+    ...gridOptions.defaultColDef,
+  };
+
+  const mergedDefaultColDef = baseDefaultColDef;
+
   return (
     <>
       <style>{`
@@ -44,12 +58,13 @@ export default function Grid({
       `}</style>
       <div
         className="ag-theme-alpine"
+        data-enable-number-coloring={enableNumberColoring ? "1" : "0"}
         style={{
           height,
-          ["--ag-header-row-border" as any]: "1px solid #363636",
-          ["--ag-wrapper-border" as any]: "transparent",
-          ["--ag-wrapper-border-radius" as any]: "24px",
-          ["--ag-header-background-color" as any]: "#fff",
+          ["--ag-header-row-border" as string]: "1px solid #363636",
+          ["--ag-wrapper-border" as string]: "transparent",
+          ["--ag-wrapper-border-radius" as string]: "24px",
+          ["--ag-header-background-color" as string]: "#fff",
         }}>
         <AgGridReact
           ref={gridRef}
@@ -58,52 +73,14 @@ export default function Grid({
           pinnedBottomRowData={pinnedBottomRowData}
           // 기본 그리드 옵션
           rowHeight={35}
-          suppressColumnResize={false} // 컬럼 리사이징 허용 (개별 컬럼에서 제어)
           suppressRowClickSelection={true} // 행 클릭 선택 비활성화
           suppressCellFocus={true} // 셀 포커스 비활성화
           suppressRowHoverHighlight={false} // 행 호버 하이라이트 허용
           localeText={{
             noRowsToShow: "조회된 결과가 없습니다. 조회를 진행해주세요",
           }}
-          // 숫자 색상 적용이 활성화된 경우 기본 스타일 설정
-          {...(enableNumberColoring && {
-            defaultColDef: {
-              sortable: false,
-              filter: false,
-              resizable: false,
-              suppressMovable: true,
-              ...gridOptions.defaultColDef,
-              cellStyle: (params: any) => {
-                // 기존 cellStyle이 있으면 먼저 적용
-                const baseStyle = gridOptions.defaultColDef?.cellStyle
-                  ? typeof gridOptions.defaultColDef.cellStyle === "function"
-                    ? gridOptions.defaultColDef.cellStyle(params)
-                    : gridOptions.defaultColDef.cellStyle
-                  : {};
-
-                // 순번 칼럼(#)은 색상 적용 제외
-                if (params.column.colDef.headerName === "#") {
-                  return baseStyle;
-                }
-
-                // 숫자 값에 대한 색상 적용 (순번 칼럼 제외)
-                if (typeof params.value === "number") {
-                  return {
-                    ...baseStyle,
-                    color:
-                      params.value > 0
-                        ? "#2563eb"
-                        : params.value < 0
-                        ? "#dc2626"
-                        : "#000000",
-                    fontWeight: "bold",
-                  };
-                }
-
-                return baseStyle;
-              },
-            },
-          })}
+          // 컬럼 공통 동작 정의(유연 채우기 + 확장 상한)
+          defaultColDef={mergedDefaultColDef}
           // AG Grid v33+ legacy theming support
           gridOptions={{ ...gridOptions, theme: "legacy" }} // See error #239
         />

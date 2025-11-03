@@ -70,7 +70,7 @@ export async function apiClient<T>(
     }
 
     const data = await response.json();
-
+    console.log("api테스트", data);
     return {
       data,
       status: response.status,

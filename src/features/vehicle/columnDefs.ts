@@ -1,0 +1,23 @@
+export const vehicleColumnDefs = [
+  {
+    headerName: "-",
+    valueGetter: "node.rowIndex + 1",
+    width: 60,
+    flex: 0,
+    resizable: false,
+  },
+  {
+    headerName: "차량번호",
+    field: "차량번호",
+    minWidth: 100,
+  },
+  { headerName: "권역", field: "권역", minWidth: 80 },
+  { headerName: "운수사", field: "운수사", minWidth: 80 },
+  { headerName: "차량종류", field: "차량종류", minWidth: 90 },
+  { headerName: "차량상태", field: "차량상태", minWidth: 90 },
+  { headerName: "제조사", field: "제조사", minWidth: 80 },
+  { headerName: "모델명", field: "모델명", minWidth: 100 },
+  { headerName: "출고년도", field: "출고년도", minWidth: 90 },
+  { headerName: "연료형태", field: "연료형태", minWidth: 90 },
+  { headerName: "비고", field: "비고", minWidth: 150 },
+];
