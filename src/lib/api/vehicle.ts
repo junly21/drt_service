@@ -1,6 +1,6 @@
 /**
  * Vehicle 관련 API 함수
- * 모든 요청은 POST 메소드로 /api/proxy를 통해 프록시 서버로 전달됩니다.
+ * Next.js API Route를 통해 백엔드로 요청합니다.
  */
 
 import { post } from "@/lib/api/client";
@@ -18,18 +18,12 @@ import type {
 export async function getVehicleList(
   params: VehicleListParams = {}
 ): Promise<VehicleListResponse> {
-  const endpoint = "/vehicles";
-
-  // POST 요청으로 body에 파라미터 전달
-  const response = await post<VehicleListResponse>(endpoint, params);
-  return response.data;
+  return post<VehicleListResponse>("/api/vehicles", params);
 }
 
 /**
  * 차량 상세 조회 API (추후 필요시 사용)
  */
 export async function getVehicleById(id: string): Promise<VehicleRow> {
-  const endpoint = `/vehicles/${id}`;
-  const response = await post<VehicleRow>(endpoint, {});
-  return response.data;
+  return post<VehicleRow>(`/api/vehicles/${id}`, { vehicle_id: id });
 }

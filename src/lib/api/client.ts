@@ -9,13 +9,7 @@ type RequestOptions = {
   body?: unknown;
 };
 
-type ApiResponse<T> = {
-  data: T;
-  status: number;
-  statusText: string;
-};
-
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(
     public status: number,
     public statusText: string,
@@ -27,39 +21,38 @@ class ApiError extends Error {
 }
 
 /**
- * 기본 API 엔드포인트 URL
- * 환경변수에서 가져오거나 기본값 사용
- * 기본은 /api. 엔드포인트 전용 Route를 우선 사용하고,
- * 필요 시 /api/proxy/[...path]를 사용할 수 있습니다.
+ * 공통 헤더를 생성하는 함수
+ * 쿠키, 인증 토큰 등을 추가할 수 있습니다
  */
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "/api";
+function getDefaultHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  return headers;
+}
 
 /**
  * 공통 fetch 래퍼 함수
- * 모든 API 호출은 이 함수를 통해 이루어집니다.
+ * 에러 처리, 헤더, 타임아웃 등을 중앙에서 관리
  */
 export async function apiClient<T>(
   endpoint: string,
   options: RequestOptions = {}
-): Promise<ApiResponse<T>> {
-  // 모든 요청은 POST 메소드 사용
+): Promise<T> {
   const { method = "POST", headers = {}, body } = options;
 
-  const url = endpoint.startsWith("http")
-    ? endpoint
-    : `${API_BASE_URL}${endpoint}`;
-
   const config: RequestInit = {
-    method: "POST", // 항상 POST 메소드 사용
+    method,
     headers: {
-      "Content-Type": "application/json",
-      ...headers,
+      ...getDefaultHeaders(),
+      ...headers, // 개별 헤더는 기본 헤더를 덮어씁니다
     },
-    body: JSON.stringify(body || {}), // body가 없어도 빈 객체 전송
+    ...(body !== undefined && { body: JSON.stringify(body) }),
   };
 
   try {
-    const response = await fetch(url, config);
+    const response = await fetch(endpoint, config);
 
     if (!response.ok) {
       throw new ApiError(
@@ -70,12 +63,7 @@ export async function apiClient<T>(
     }
 
     const data = await response.json();
-    console.log("api테스트", data);
-    return {
-      data,
-      status: response.status,
-      statusText: response.statusText,
-    };
+    return data;
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;
@@ -129,5 +117,3 @@ export async function del<T>(
 ) {
   return apiClient<T>(endpoint, { method: "DELETE", headers });
 }
-
-export { ApiError };

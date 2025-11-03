@@ -1,71 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const BACKEND_URL =
+  process.env.BACKEND_API_BASE_URL || "http://192.168.111.152:8081/drt";
+
 export async function POST(request: NextRequest) {
   try {
-    // const body = await request.json(); // 현재는 body 미사용
+    const body = await request.json().catch(() => ({}));
 
-    // 인라인 목 데이터 (차량 목록)
-    const mockData = [
-      {
-        차량번호: "11가1234",
-        권역: "전라남도",
-        운수사: "목포시내버스",
-        차량종류: "버스",
-        차량상태: "운행중",
-        제조사: "현대",
-        모델명: "뉴 슈퍼 에어로시티",
-        출고년도: "2020",
-        연료형태: "CNG",
-        비고: "",
-      },
-      {
-        차량번호: "22나5678",
-        권역: "전라남도",
-        운수사: "여수시내버스",
-        차량종류: "버스",
-        차량상태: "정지",
-        제조사: "기아",
-        모델명: "그랜버드",
-        출고년도: "2019",
-        연료형태: "디젤",
-        비고: "정기점검",
-      },
-      {
-        차량번호: "33다9012",
-        권역: "전라남도",
-        운수사: "완도시내버스",
-        차량종류: "버스",
-        차량상태: "운행중",
-        제조사: "현대",
-        모델명: "뉴 슈퍼 에어로시티",
-        출고년도: "2021",
-        연료형태: "전기",
-        비고: "",
-      },
-      {
-        차량번호: "44라3456",
-        권역: "전라남도",
-        운수사: "목포시내버스",
-        차량종류: "버스",
-        차량상태: "정지",
-        제조사: "기아",
-        모델명: "그랜버드",
-        출고년도: "2018",
-        연료형태: "CNG",
-        비고: "사고수리중",
-      },
-    ];
+    const response = await fetch(`${BACKEND_URL}/selectVehicleList.do`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
-    return NextResponse.json(
-      { vehicles: mockData, total: mockData.length },
-      { status: 200 }
-    );
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Backend request failed" },
+        { status: response.status }
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data: any[] = await response.json();
+
+    console.log("Backend response:", JSON.stringify(data, null, 2));
+
+    return NextResponse.json({ vehicles: data, total: data.length });
   } catch (error) {
+    console.error("Vehicle API error:", error);
     return NextResponse.json(
-      {
-        error: "Internal server error",
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
