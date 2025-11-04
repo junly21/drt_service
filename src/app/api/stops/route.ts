@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
 
-    const response = await fetch(`${BACKEND_BASE_URL}/selectVehicleList.do`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/selectStationList.do`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -21,11 +21,11 @@ export async function POST(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any[] = await response.json();
 
-    console.log("Backend response:", JSON.stringify(data, null, 2));
+    console.log("Stop backend response:", JSON.stringify(data, null, 2));
 
-    return NextResponse.json({ vehicles: data, total: data.length });
+    return NextResponse.json({ stops: data, total: data.length });
   } catch (error) {
-    console.error("Vehicle API error:", error);
+    console.error("Stop API error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

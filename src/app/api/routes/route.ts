@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const BACKEND_URL =
-  process.env.BACKEND_API_BASE_URL || "http://192.168.111.152:8081/drt";
+import { BACKEND_BASE_URL } from "@/config/backend";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
 
-    const response = await fetch(`${BACKEND_URL}/selectRouteList.do`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/selectRouteList.do`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -34,5 +32,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-

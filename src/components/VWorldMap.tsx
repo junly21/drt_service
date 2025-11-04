@@ -7,6 +7,7 @@ import { XYZ } from "ol/source";
 import { Tile } from "ol/layer";
 import { defaults } from "ol/control";
 import { fromLonLat } from "ol/proj";
+import { VWORLD_API_KEY } from "@/config/vworld";
 
 interface VWorldMapProps {
   /** 지도 컨테이너의 고유 ID */
@@ -26,12 +27,13 @@ interface VWorldMapProps {
 /**
  * VWorld API를 사용하는 OpenLayers 지도 컴포넌트
  */
+
 export default function VWorldMap({
   mapId,
   mapRef,
-  center = [127.169972804, 37.513058796], // 서울 기본 좌표
-  zoom = 11,
-  apiKey = "1A2BB1EC-4324-34AA-B2D2-A9C06A2B5928",
+  center = [126.94917737, 37.3745533], // 서울 기본 좌표
+  zoom = 17,
+  apiKey = VWORLD_API_KEY,
   className = "",
 }: VWorldMapProps) {
   const internalMapRef = useRef<Map | null>(null);

@@ -80,12 +80,7 @@ export default function RoutePage() {
 
         {/* 지도 영역 (1/3) */}
         <div className="flex-1">
-          <VWorldMap
-            mapId="route-map"
-            center={[127.7511643607, 34.5171985513]}
-            zoom={14}
-            className="h-full"
-          />
+          <VWorldMap mapId="route-map" className="h-full" />
         </div>
       </div>
     </section>
