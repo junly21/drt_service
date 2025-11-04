@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Grid from "@/components/Grid";
 import { FilterForm } from "@/components/ui/FilterForm";
+import Grid from "@/components/Grid";
+import VWorldMap from "@/components/VWorldMap";
 import { getRouteList } from "@/lib/api/route";
 import { routeColumnDefs } from "@/features/route/columnDefs";
 import { defaultFilters, routeFields } from "@/features/route/fieldconfig";
@@ -57,22 +58,36 @@ export default function RoutePage() {
         className="mb-4"
       />
 
-      {loading ? (
-        <div
-          className="flex items-center justify-center"
-          style={{ height: 560 }}>
-          <p>데이터를 불러오는 중...</p>
+      {/* 그리드와 지도를 2:1 비율로 배치 */}
+      <div className="flex gap-4" style={{ height: "calc(100vh - 350px)" }}>
+        {/* 그리드 영역 (2/3) */}
+        <div className="flex-[2] flex flex-col">
+          {loading ? (
+            <div className="flex items-center justify-center h-full">
+              <p>데이터를 불러오는 중...</p>
+            </div>
+          ) : (
+            <Grid
+              rowData={rowData}
+              columnDefs={columnDefs}
+              gridRef={gridRef}
+              gridOptions={{}}
+              height={"100%"}
+              enableNumberColoring={true}
+            />
+          )}
         </div>
-      ) : (
-        <Grid
-          rowData={rowData}
-          columnDefs={columnDefs}
-          gridRef={gridRef}
-          gridOptions={{}}
-          height={"calc(100vh - 350px)"}
-          enableNumberColoring={true}
-        />
-      )}
+
+        {/* 지도 영역 (1/3) */}
+        <div className="flex-1">
+          <VWorldMap
+            mapId="route-map"
+            center={[127.7511643607, 34.5171985513]}
+            zoom={14}
+            className="h-full"
+          />
+        </div>
+      </div>
     </section>
   );
 }

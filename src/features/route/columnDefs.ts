@@ -1,3 +1,5 @@
+import { formatTimestamp } from "@/lib/utils";
+
 export const routeColumnDefs = [
   {
     headerName: "-",
@@ -11,8 +13,18 @@ export const routeColumnDefs = [
   { headerName: "기점", field: "o_stn_id", minWidth: 120 },
   { headerName: "종점", field: "d_stn_id", minWidth: 120 },
   { headerName: "상하행구분", field: "dir_cd", minWidth: 110 },
-  { headerName: "적용시작일", field: "start_dt", minWidth: 120 },
-  { headerName: "적용종료일", field: "end_dt", minWidth: 120 },
+  {
+    headerName: "적용시작일",
+    field: "start_dt",
+    minWidth: 120,
+    valueFormatter: (params) => formatTimestamp(params.value),
+  },
+  {
+    headerName: "적용종료일",
+    field: "end_dt",
+    minWidth: 120,
+    valueFormatter: (params) => formatTimestamp(params.value),
+  },
   { headerName: "비고", field: "remark", minWidth: 150 },
 ];
 
