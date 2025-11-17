@@ -6,9 +6,10 @@
 export type CallRow = any;
 
 export interface CallFilters {
-  vehicleNo?: string;
-  startDate?: string;
-  endDate?: string;
+  routeId?: string;
+  deviceId?: string;
+  startPointId?: string;
+  endPointId?: string;
 }
 
 export interface CallListResponse {
@@ -17,9 +18,10 @@ export interface CallListResponse {
 }
 
 export interface CallListParams {
-  vehicleNo?: string;
-  startDate?: string;
-  endDate?: string;
+  routeId?: string;
+  deviceId?: string;
+  startPointId?: string;
+  endPointId?: string;
   page?: number;
   pageSize?: number;
 }

@@ -100,7 +100,7 @@ export function FilterForm<T extends FieldValues>({
       <form
         onSubmit={form.handleSubmit(onSearch)}
         className={cn(
-          "bg-[#E9E9E9] border border-[#D9D9D9] p-4 rounded-xl",
+          "bg-[#E9E9E9] border border-[#D9D9D9] p-4 rounded-xl px-6",
           className
         )}>
         {/* 통합: 필드 갯수에 따라 1줄(<=4) 또는 2줄(>=5)로 렌더링하고, 조회 버튼은 항상 마지막 필드 우측에 위치 */}
@@ -108,11 +108,11 @@ export function FilterForm<T extends FieldValues>({
           const totalItems = fields.length + 1; // +1 = 조회 버튼
           const isTwoRows = fields.length >= 6; // 5개는 한 줄 유지
           const getPaddingClass = (count: number) => {
-            if (count <= 2) return "px-[500px]";
-            if (count === 3) return "px-[300px]";
-            if (count === 4) return "px-[200px]";
-            if (count === 5) return "px-[100px]";
-            return "px-[300px]"; // 6개 이상(두 줄) 기본
+            if (count <= 2) return "px-[300px]";
+            if (count === 3) return "px-[200px]";
+            if (count === 4) return "px-[50px]";
+            if (count === 5) return "px-[50px]";
+            return "px-[50px]"; // 6개 이상(두 줄) 기본
           };
           const cols = isTwoRows ? Math.ceil(totalItems / 2) : totalItems;
 
@@ -209,14 +209,25 @@ export function FilterForm<T extends FieldValues>({
             if (fields.length === 1) {
               // 단일 필드: 필드가 크게 늘어나고 버튼은 바로 우측에 위치
               return (
-                <div className={cn("flex justify-center", getPaddingClass(fields.length))}>
+                <div className="w-full overflow-x-auto">
                   <div
-                    className="grid gap-4 items-end justify-center w-full"
-                    style={{ gridTemplateColumns: `1fr auto` }}
-                  >
-                    {fields.map(renderField)}
-                    <div className="flex items-end justify-end">
-                      <Button type="submit" className="rounded-lg">조회</Button>
+                    className={cn(
+                      "flex justify-center",
+                      getPaddingClass(fields.length)
+                    )}>
+                    <div
+                      className="grid gap-4 items-end justify-center w-full"
+                      style={{
+                        gridTemplateColumns: `1fr auto`,
+                        maxWidth: "100%",
+                        minWidth: 0,
+                      }}>
+                      {fields.map(renderField)}
+                      <div className="flex items-end justify-end">
+                        <Button type="submit" className="rounded-lg">
+                          조회
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -225,14 +236,26 @@ export function FilterForm<T extends FieldValues>({
 
             // 2~4개: 고정 범위 트랙으로 균등 분할
             return (
-              <div className={cn("flex justify-center", getPaddingClass(fields.length))}>
+              <div className="w-full overflow-x-auto">
                 <div
-                  className="grid gap-4 items-end justify-center"
-                  style={{ gridTemplateColumns: `repeat(${cols}, minmax(240px, 320px))` }}
-                >
-                  {fields.map(renderField)}
-                  <div className="flex items-end justify-end">
-                    <Button type="submit" className="rounded-lg">조회</Button>
+                  className={cn(
+                    "flex justify-center",
+                    getPaddingClass(fields.length)
+                  )}>
+                  <div
+                    className="grid gap-4 items-end justify-center"
+                    style={{
+                      gridTemplateColumns: `repeat(${cols}, minmax(200px, 1fr))`,
+                      width: "100%",
+                      maxWidth: "100%",
+                      minWidth: 0,
+                    }}>
+                    {fields.map(renderField)}
+                    <div className="flex items-end justify-end">
+                      <Button type="submit" className="rounded-lg">
+                        조회
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -246,23 +269,43 @@ export function FilterForm<T extends FieldValues>({
           const secondRowFields = fields.slice(secondRowStart);
 
           return (
-            <div className="flex flex-col gap-4">
-              <div className={cn("flex justify-center", getPaddingClass(fields.length))}>
+            <div className="flex flex-col gap-4 w-full overflow-x-auto">
+              <div
+                className={cn(
+                  "flex justify-center",
+                  getPaddingClass(fields.length)
+                )}>
                 <div
                   className="grid gap-4 items-end justify-center"
-                  style={{ gridTemplateColumns: `repeat(${cols}, minmax(240px, 320px))` }}
-                >
+                  style={{
+                    gridTemplateColumns: `repeat(${cols}, minmax(200px, 1fr))`,
+                    width: "100%",
+                    maxWidth: "100%",
+                    minWidth: 0,
+                  }}>
                   {firstRowFields.map(renderField)}
                 </div>
               </div>
-              <div className={cn("flex justify-center", getPaddingClass(fields.length))}>
+              <div
+                className={cn(
+                  "flex justify-center",
+                  getPaddingClass(fields.length)
+                )}>
                 <div
                   className="grid gap-4 items-end justify-center w-full"
-                  style={{ gridTemplateColumns: secondRowFields.length === 1 ? `1fr auto` : `repeat(${cols}, minmax(240px, 320px))` }}
-                >
+                  style={{
+                    gridTemplateColumns:
+                      secondRowFields.length === 1
+                        ? `1fr auto`
+                        : `repeat(${cols}, minmax(200px, 1fr))`,
+                    maxWidth: "100%",
+                    minWidth: 0,
+                  }}>
                   {secondRowFields.map(renderField)}
                   <div className="flex items-end justify-end">
-                    <Button type="submit" className="rounded-lg">조회</Button>
+                    <Button type="submit" className="rounded-lg">
+                      조회
+                    </Button>
                   </div>
                 </div>
               </div>
