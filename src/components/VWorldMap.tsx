@@ -31,7 +31,7 @@ interface VWorldMapProps {
 export default function VWorldMap({
   mapId,
   mapRef,
-  center = [126.94917737, 37.3745533], // 서울 기본 좌표
+  center = [126.94917737, 37.3745533],
   zoom = 17,
   apiKey = VWORLD_API_KEY,
   className = "",
