@@ -17,15 +17,15 @@ export const routeColumnDefs = [
     headerName: "적용시작일",
     field: "start_dt",
     minWidth: 120,
-    valueFormatter: (params) => formatTimestamp(params.value),
+    valueFormatter: (params: { value: unknown }) =>
+      formatTimestamp(params.value as number | string | null | undefined),
   },
   {
     headerName: "적용종료일",
     field: "end_dt",
     minWidth: 120,
-    valueFormatter: (params) => formatTimestamp(params.value),
+    valueFormatter: (params: { value: unknown }) =>
+      formatTimestamp(params.value as number | string | null | undefined),
   },
   { headerName: "비고", field: "remark", minWidth: 150 },
 ];
-
-

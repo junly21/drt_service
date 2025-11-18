@@ -82,6 +82,7 @@ export default function Grid({
           // 컬럼 공통 동작 정의(유연 채우기 + 확장 상한)
           defaultColDef={mergedDefaultColDef}
           // AG Grid v33+ legacy theming support
+          {...gridOptions}
           gridOptions={{ ...gridOptions, theme: "legacy" }} // See error #239
         />
       </div>

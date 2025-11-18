@@ -16,7 +16,8 @@ export const stopColumnDefs = [
     headerName: "정보수집일",
     field: "start_dt",
     minWidth: 120,
-    valueFormatter: (params) => formatTimestamp(params.value),
+    valueFormatter: (params: { value: unknown }) =>
+      formatTimestamp(params.value as number | string | null | undefined),
   },
   { headerName: "정류장형태", field: "stn_type", minWidth: 110 },
   { headerName: "비고", field: "remark", minWidth: 150 },

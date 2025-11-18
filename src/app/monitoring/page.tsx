@@ -354,7 +354,10 @@ export default function MonitoringPage() {
     return () => {
       clearInterval(interval);
       map.setTarget(undefined);
-      document.body.removeChild(tooltipElement);
+      // tooltipElement가 body의 자식인지 확인 후 제거
+      if (tooltipElement && tooltipElement.parentNode === document.body) {
+        document.body.removeChild(tooltipElement);
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // 의존성 제거: 지도는 한 번만 초기화
