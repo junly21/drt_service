@@ -29,9 +29,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log("[api/dispatch] raw backend data:", data);
+
+    const sortedData = [...data].sort((a, b) => {
+      const dispatchCompare =
+        Number(b.dispatch_dt ?? 0) - Number(a.dispatch_dt ?? 0);
+      if (dispatchCompare !== 0) {
+        return dispatchCompare;
+      }
+
+      const routeCompare = String(a.route_id ?? "").localeCompare(
+        String(b.route_id ?? "")
+      );
+      if (routeCompare !== 0) {
+        return routeCompare;
+      }
+
+      return String(a.point_id ?? "").localeCompare(String(b.point_id ?? ""));
+    });
+
     return NextResponse.json({
-      dispatches: data,
-      total: data.length,
+      dispatches: sortedData,
+      total: sortedData.length,
     });
   } catch (error) {
     console.error("Dispatch API error:", error);

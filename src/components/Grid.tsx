@@ -3,6 +3,7 @@ import {
   ModuleRegistry,
   AllCommunityModule,
   type ColDef,
+  type ColGroupDef,
   type GridOptions,
 } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
@@ -13,12 +14,13 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface GridProps {
   rowData: Array<Record<string, unknown>>;
-  columnDefs: ColDef[];
+  columnDefs: Array<ColDef | ColGroupDef>;
   pinnedBottomRowData?: Array<Record<string, unknown>>;
   gridRef: React.RefObject<AgGridReact<Record<string, unknown>> | null>;
   gridOptions?: GridOptions;
   height?: number | string; // 높이 props 추가
   enableNumberColoring?: boolean; // 숫자 색상 적용 여부
+  rowHeight?: number;
 }
 
 export default function Grid({
@@ -29,6 +31,7 @@ export default function Grid({
   gridOptions = {},
   height = "100%", // 기본값
   enableNumberColoring = false, // 기본값
+  rowHeight = 35,
 }: GridProps) {
   // 공통 기본 컬럼 설정: 최소 너비 유지, 과도한 확장 방지, 필요 시 가로 스크롤 허용
   const baseDefaultColDef = {
@@ -72,7 +75,7 @@ export default function Grid({
           columnDefs={columnDefs}
           pinnedBottomRowData={pinnedBottomRowData}
           // 기본 그리드 옵션
-          rowHeight={35}
+          rowHeight={rowHeight}
           suppressRowClickSelection={true} // 행 클릭 선택 비활성화
           suppressCellFocus={true} // 셀 포커스 비활성화
           suppressRowHoverHighlight={false} // 행 호버 하이라이트 허용

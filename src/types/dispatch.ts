@@ -26,3 +26,14 @@ export interface DispatchListParams {
   page?: number;
   pageSize?: number;
 }
+
+export interface DispatchStopEntry {
+  point_id: string;
+  algh_dtm: number | null;
+}
+
+export interface DispatchGridRow extends Record<string, unknown> {
+  dispatch_dt: number;
+  route_id: string;
+  stops: DispatchStopEntry[];
+}

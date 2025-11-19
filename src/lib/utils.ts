@@ -39,6 +39,10 @@ export function formatTimestamp(
       return `${year}-${month}-${day} ${hours}:${minutes}`;
     case "YYYY-MM-DD HH:mm:ss":
       return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    case "HH:mm":
+      return `${hours}:${minutes}`;
+    case "HH:mm:ss":
+      return `${hours}:${minutes}:${seconds}`;
     case "YYYY/MM/DD":
       return `${year}/${month}/${day}`;
     default:

@@ -18,7 +18,21 @@ import type {
 export async function getDispatchList(
   params: DispatchListParams = {}
 ): Promise<DispatchListResponse> {
-  return post<DispatchListResponse>("/api/dispatch", params);
+  const response = await post<DispatchListResponse>("/api/dispatch", params);
+
+  console.log("[getDispatchList] raw response:", response.dispatches);
+
+  const sortedDispatches = [...response.dispatches].sort((a, b) => {
+    if (a.route_id === b.route_id) {
+      return a.point_id.localeCompare(b.point_id);
+    }
+    return a.route_id.localeCompare(b.route_id);
+  });
+
+  return {
+    ...response,
+    dispatches: sortedDispatches,
+  };
 }
 
 /**
