@@ -4,11 +4,7 @@
  */
 
 import { post } from "@/lib/api/client";
-import type {
-  CallListParams,
-  CallListResponse,
-  CallRow,
-} from "@/types/call";
+import type { CallListParams, CallListResponse, CallRow } from "@/types/call";
 
 /**
  * 호출기록 목록 조회 API

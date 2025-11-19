@@ -16,29 +16,39 @@ export const callColumnDefs = [
   // },
 
   {
-    headerName: "디바이스ID",
-    field: "device_id",
-    minWidth: 150,
-  },
-  {
     headerName: "호출일시",
     field: "call_dtm",
     minWidth: 150,
   },
   {
-    headerName: "승차역ID",
-    field: "start_point_id",
-    minWidth: 120,
+    headerName: "노선명",
+    field: "route_nm",
+    minWidth: 140,
   },
   {
-    headerName: "하차역ID",
-    field: "end_point_id",
-    minWidth: 120,
+    headerName: "디바이스ID",
+    field: "device_id",
+    minWidth: 150,
+  },
+  {
+    headerName: "승차정류장",
+    field: "start_point_nm",
+    minWidth: 140,
+  },
+  {
+    headerName: "하차정류장",
+    field: "end_point_nm",
+    minWidth: 140,
   },
   {
     headerName: "예약인원",
     field: "rsv_num",
     minWidth: 120,
+  },
+  {
+    headerName: "현재승차인원",
+    field: "curren_reserved",
+    minWidth: 140,
   },
   {
     headerName: "결제수단",
@@ -61,10 +71,5 @@ export const callColumnDefs = [
     minWidth: 150,
     valueFormatter: (params: { value: unknown }) =>
       formatTimestamp(params.value as number | string | null | undefined),
-  },
-  {
-    headerName: "노선ID",
-    field: "route_id",
-    minWidth: 120,
   },
 ];

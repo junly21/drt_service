@@ -2,8 +2,23 @@
  * Call 관련 타입 정의
  */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type CallRow = any;
+export interface CallRow {
+  dispatch_seq: number;
+  route_id: string;
+  route_nm: string;
+  device_id: string;
+  call_dtm: string;
+  start_point_id: string;
+  start_point_nm: string;
+  end_point_id: string;
+  end_point_nm: string;
+  rsv_num: number;
+  curren_reserved: number;
+  payment: string;
+  gps_x: number;
+  gps_y: number;
+  dispatch_dt: number;
+}
 
 export interface CallFilters {
   routeId?: string;
