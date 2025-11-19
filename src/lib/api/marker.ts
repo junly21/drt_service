@@ -17,6 +17,7 @@ export interface StopRow {
   remark: string;
   stn_type: string;
   stn_id: string;
+  direction?: string;
 }
 
 export interface StopListResponse {

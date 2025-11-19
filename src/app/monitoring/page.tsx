@@ -17,13 +17,16 @@ import Overlay from "ol/Overlay";
 import { VWORLD_API_KEY } from "@/config/vworld";
 import { getRouteNodes, getVehicleMarkers } from "@/lib/api/monitoring";
 import type { RouteNode, VehicleMarker } from "@/types/monitoring";
+import { getStopList, type StopRow } from "@/lib/api/marker";
 
 export default function MonitoringPage() {
   const mapRef = useRef<Map | null>(null);
   const vectorSourceRef = useRef<VectorSource | null>(null);
   const vehicleSourceRef = useRef<VectorSource | null>(null);
+  const stopSourceRef = useRef<VectorSource | null>(null);
   const overlayRef = useRef<Overlay | null>(null);
   const routeNodesLoadedRef = useRef(false);
+  const stopsLoadedRef = useRef(false);
   const [loading, setLoading] = useState(false);
 
   // Catmull-Rom 스플라인으로 부드러운 곡선 생성
@@ -188,6 +191,55 @@ export default function MonitoringPage() {
     }
   }, []);
 
+  // 정류장 데이터 로드 및 지도에 표시 (한 번만 실행)
+  const loadStops = useCallback(async () => {
+    if (stopsLoadedRef.current) return;
+
+    try {
+      const response = await getStopList();
+      const stops = response.stops || [];
+      const stopSource = stopSourceRef.current;
+      const map = mapRef.current;
+      if (!stopSource || !map) {
+        console.warn("stopSource or map is not ready");
+        return;
+      }
+
+      stopSource.clear();
+
+      stops.forEach((stop: StopRow) => {
+        const coord = fromLonLat([stop.gps_x, stop.gps_y]);
+        const feature = new Feature({
+          geometry: new Point(coord),
+          stn_id: stop.stn_id,
+          stn_nm: stop.stn_nm,
+          stn_no: stop.stn_no,
+          stn_type: stop.stn_type,
+          remark: stop.remark,
+          gps_x: stop.gps_x,
+          gps_y: stop.gps_y,
+          direction: stop.direction,
+        });
+
+        feature.setStyle(
+          new Style({
+            image: new Icon({
+              src: "/busstop.png",
+              scale: 0.1,
+              anchor: [0.5, 1],
+            }),
+          })
+        );
+
+        stopSource.addFeature(feature);
+      });
+
+      stopsLoadedRef.current = true;
+    } catch (error) {
+      console.error("Failed to load stops:", error);
+    }
+  }, []);
+
   // 버스 마커 데이터 로드 및 지도에 표시
   const loadVehicleMarkers = useCallback(async () => {
     try {
@@ -251,6 +303,11 @@ export default function MonitoringPage() {
       source: vectorSource,
     });
 
+    const stopSource = new VectorSource();
+    const stopLayer = new VectorLayer({
+      source: stopSource,
+    });
+
     const vehicleSource = new VectorSource();
     const vehicleLayer = new VectorLayer({
       source: vehicleSource,
@@ -279,6 +336,7 @@ export default function MonitoringPage() {
           }),
         }),
         vectorLayer,
+        stopLayer,
         vehicleLayer,
       ],
       target: "monitoring-map",
@@ -286,6 +344,7 @@ export default function MonitoringPage() {
       view: new View({
         center: fromLonLat([126.949402, 37.373081]),
         zoom: 17,
+        maxZoom: 18,
       }),
     });
 
@@ -327,6 +386,19 @@ export default function MonitoringPage() {
           tooltipElement.style.display = "block";
           overlay.setPosition(e.coordinate);
         }
+      } else if (feature && feature.get("stn_id")) {
+        if (hoveredFeature !== feature) {
+          hoveredFeature = feature;
+          const stnNm = feature.get("stn_nm");
+          const direction = feature.get("direction");
+
+          tooltipElement.innerHTML = `
+            <div>정류장명: ${stnNm || ""}</div>
+            <div>방향: ${direction || ""}</div>
+          `;
+          tooltipElement.style.display = "block";
+          overlay.setPosition(e.coordinate);
+        }
       } else {
         // 호버 해제
         if (hoveredFeature) {
@@ -340,10 +412,12 @@ export default function MonitoringPage() {
     mapRef.current = map;
     vectorSourceRef.current = vectorSource;
     vehicleSourceRef.current = vehicleSource;
+    stopSourceRef.current = stopSource;
     overlayRef.current = overlay;
 
     // 노선 데이터는 한 번만 로드
     loadRouteNodes();
+    loadStops();
 
     // 버스 데이터 초기 로드 및 주기적 업데이트
     loadVehicleMarkers();
