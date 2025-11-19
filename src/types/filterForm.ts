@@ -18,3 +18,4 @@ export interface FieldConfig {
   filterOptions?: (options: FieldOption[]) => FieldOption[];
   error?: string;
 }
+

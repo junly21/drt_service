@@ -18,7 +18,7 @@ export const callColumnDefs = [
   {
     headerName: "호출일시",
     field: "call_dtm",
-    minWidth: 150,
+    minWidth: 170,
   },
   {
     headerName: "노선명",

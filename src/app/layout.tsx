@@ -52,6 +52,9 @@ export default function RootLayout({
               <Link href="/calls" className="hover:underline">
                 호출기록
               </Link>
+              <Link href="/selectOperLogList" className="hover:underline">
+                운행로그
+              </Link>
               <Link href="/stats" className="hover:underline">
                 호출통계
               </Link>
