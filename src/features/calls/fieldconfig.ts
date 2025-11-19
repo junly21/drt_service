@@ -6,35 +6,21 @@ import type { FieldConfig } from "@/types/filterForm";
 import type { CallFilters } from "@/types/call";
 
 export const defaultFilters: CallFilters = {
-  routeId: "",
+  callDatetime: "",
   deviceId: "",
-  startPointId: "",
-  endPointId: "",
 };
 
 export const callFields: FieldConfig[] = [
   {
-    name: "routeId",
-    label: "노선ID",
+    name: "callDatetime",
+    label: "호출일시",
     type: "text",
-    placeholder: "노선ID",
+    placeholder: "호출일시",
   },
   {
     name: "deviceId",
     label: "디바이스ID",
     type: "text",
     placeholder: "디바이스ID",
-  },
-  {
-    name: "startPointId",
-    label: "출발지ID",
-    type: "text",
-    placeholder: "출발지ID",
-  },
-  {
-    name: "endPointId",
-    label: "도착지ID",
-    type: "text",
-    placeholder: "도착지ID",
   },
 ];

@@ -36,21 +36,13 @@ export default function CallsPage() {
   // 필터링된 데이터 (필요시 클라이언트 사이드 추가 필터링)
   const rowData = useMemo(() => {
     return allRows.filter((r) => {
-      const matchRouteId = filters.routeId
-        ? String(r["route_id"] || "").includes(filters.routeId)
+      const matchCallDatetime = filters.callDatetime
+        ? String(r["call_dtm"] || "").includes(filters.callDatetime)
         : true;
       const matchDeviceId = filters.deviceId
         ? String(r["device_id"] || "").includes(filters.deviceId)
         : true;
-      const matchStartPointId = filters.startPointId
-        ? String(r["start_point_id"] || "").includes(filters.startPointId)
-        : true;
-      const matchEndPointId = filters.endPointId
-        ? String(r["end_point_id"] || "").includes(filters.endPointId)
-        : true;
-      return (
-        matchRouteId && matchDeviceId && matchStartPointId && matchEndPointId
-      );
+      return matchCallDatetime && matchDeviceId;
     });
   }, [allRows, filters]);
 

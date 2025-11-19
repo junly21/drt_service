@@ -2,7 +2,7 @@
  * Call 관련 타입 정의
  */
 
-export interface CallRow {
+export interface CallRow extends Record<string, unknown> {
   dispatch_seq: number;
   route_id: string;
   route_nm: string;
@@ -21,10 +21,8 @@ export interface CallRow {
 }
 
 export interface CallFilters {
-  routeId?: string;
+  callDatetime?: string;
   deviceId?: string;
-  startPointId?: string;
-  endPointId?: string;
 }
 
 export interface CallListResponse {
@@ -33,10 +31,8 @@ export interface CallListResponse {
 }
 
 export interface CallListParams {
-  routeId?: string;
+  callDatetime?: string;
   deviceId?: string;
-  startPointId?: string;
-  endPointId?: string;
   page?: number;
   pageSize?: number;
 }
