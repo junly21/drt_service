@@ -1,7 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
+import { BACKEND_BASE_URL } from "@/config/backend";
 
-//더미 정류장
+//더미 정류장 (하위 호환성을 위해 유지, 실제로는 API에서 가져옴)
 export const dummyStops = [
+  {
+    stn_no: "3259432",
+    start_dt: 1735657200000,
+    stn_nm: "내외진",
+    end_dt: 253402182000000,
+    gps_x: 127.767312,
+    gps_y: 34.509394,
+    stn_type: "OPEN",
+    stn_id: "ST00000029",
+    direction: "우실행",
+  },
   {
     stn_no: "3259431",
     start_dt: 1735657200000,
@@ -14,14 +26,14 @@ export const dummyStops = [
     direction: "안도행",
   },
   {
-    stn_no: "3259432",
+    stn_no: "3259465",
     start_dt: 1735657200000,
-    stn_nm: "내외진",
+    stn_nm: "대유",
     end_dt: 253402182000000,
-    gps_x: 127.767312,
-    gps_y: 34.509394,
+    gps_x: 127.759692,
+    gps_y: 34.53765,
     stn_type: "OPEN",
-    stn_id: "ST00000029",
+    stn_id: "ST00000016",
     direction: "우실행",
   },
   {
@@ -36,26 +48,24 @@ export const dummyStops = [
     direction: "함구미행",
   },
   {
-    stn_no: "3259465",
+    stn_no: "3259452",
     start_dt: 1735657200000,
-    stn_nm: "대유",
+    stn_nm: "두포마을",
     end_dt: 253402182000000,
-    gps_x: 127.759692,
-    gps_y: 34.53765,
+    gps_x: 127.73367,
+    gps_y: 34.526561,
     stn_type: "OPEN",
-    stn_id: "ST00000016",
-    direction: "우실행",
+    stn_id: "ST00000054",
   },
   {
-    stn_no: "3259462",
+    stn_no: "3259451",
     start_dt: 1735657200000,
-    stn_nm: "두포마을분무골",
+    stn_nm: "두포마을",
     end_dt: 253402182000000,
-    gps_x: 127.730797,
-    gps_y: 34.527644,
+    gps_x: 127.733626,
+    gps_y: 34.526462,
     stn_type: "OPEN",
-    stn_id: "ST00000022",
-    direction: "우실행",
+    stn_id: "ST00000053",
   },
   {
     stn_no: "3259461",
@@ -69,15 +79,15 @@ export const dummyStops = [
     direction: "분무골행",
   },
   {
-    stn_no: "3259458",
+    stn_no: "3259462",
     start_dt: 1735657200000,
-    stn_nm: "모하",
+    stn_nm: "두포마을분무골",
     end_dt: 253402182000000,
-    gps_x: 127.749086,
-    gps_y: 34.523789,
+    gps_x: 127.730797,
+    gps_y: 34.527644,
     stn_type: "OPEN",
-    stn_id: "ST00000020",
-    direction: "분무골행",
+    stn_id: "ST00000022",
+    direction: "우실행",
   },
   {
     stn_no: "3259457",
@@ -89,6 +99,17 @@ export const dummyStops = [
     stn_type: "OPEN",
     stn_id: "ST00000019",
     direction: "우실행",
+  },
+  {
+    stn_no: "3259458",
+    start_dt: 1735657200000,
+    stn_nm: "모하",
+    end_dt: 253402182000000,
+    gps_x: 127.749086,
+    gps_y: 34.523789,
+    stn_type: "OPEN",
+    stn_id: "ST00000020",
+    direction: "분무골행",
   },
   {
     stn_no: "3259445",
@@ -113,17 +134,6 @@ export const dummyStops = [
     direction: "안도행",
   },
   {
-    stn_no: "3259478",
-    start_dt: 1735657200000,
-    stn_nm: "서고지",
-    end_dt: 253402182000000,
-    gps_x: 127.798053,
-    gps_y: 34.478224,
-    stn_type: "OPEN",
-    stn_id: "ST00000049",
-    direction: "안도행",
-  },
-  {
     stn_no: "3259477",
     start_dt: 1735657200000,
     stn_nm: "서고지",
@@ -135,14 +145,14 @@ export const dummyStops = [
     direction: "우실행",
   },
   {
-    stn_no: "3259443",
+    stn_no: "3259478",
     start_dt: 1735657200000,
-    stn_nm: "소우실포",
+    stn_nm: "서고지",
     end_dt: 253402182000000,
-    gps_x: 127.788799,
-    gps_y: 34.499515,
+    gps_x: 127.798053,
+    gps_y: 34.478224,
     stn_type: "OPEN",
-    stn_id: "ST00000044",
+    stn_id: "ST00000049",
     direction: "안도행",
   },
   {
@@ -155,6 +165,17 @@ export const dummyStops = [
     stn_type: "OPEN",
     stn_id: "ST00000043",
     direction: "우실행",
+  },
+  {
+    stn_no: "3259443",
+    start_dt: 1735657200000,
+    stn_nm: "소우실포",
+    end_dt: 253402182000000,
+    gps_x: 127.788799,
+    gps_y: 34.499515,
+    stn_type: "OPEN",
+    stn_id: "ST00000044",
+    direction: "안도행",
   },
   {
     stn_no: "3259464",
@@ -179,17 +200,6 @@ export const dummyStops = [
     direction: "우실행",
   },
   {
-    stn_no: "3259471",
-    start_dt: 1735657200000,
-    stn_nm: "송고",
-    end_dt: 253402182000000,
-    gps_x: 127.728029,
-    gps_y: 34.547548,
-    stn_type: "OPEN",
-    stn_id: "ST00000032",
-    direction: "함구미행",
-  },
-  {
     stn_no: "3259472",
     start_dt: 1735657200000,
     stn_nm: "송고",
@@ -201,15 +211,15 @@ export const dummyStops = [
     direction: "우실행",
   },
   {
-    stn_no: "3259449",
+    stn_no: "3259471",
     start_dt: 1735657200000,
-    stn_nm: "심포",
+    stn_nm: "송고",
     end_dt: 253402182000000,
-    gps_x: 127.773002,
-    gps_y: 34.500228,
+    gps_x: 127.728029,
+    gps_y: 34.547548,
     stn_type: "OPEN",
-    stn_id: "ST00000037",
-    direction: "우실행",
+    stn_id: "ST00000032",
+    direction: "함구미행",
   },
   {
     stn_no: "3259450",
@@ -221,6 +231,17 @@ export const dummyStops = [
     stn_type: "OPEN",
     stn_id: "ST00000038",
     direction: "안도행",
+  },
+  {
+    stn_no: "3259449",
+    start_dt: 1735657200000,
+    stn_nm: "심포",
+    end_dt: 253402182000000,
+    gps_x: 127.773002,
+    gps_y: 34.500228,
+    stn_type: "OPEN",
+    stn_id: "ST00000037",
+    direction: "우실행",
   },
   {
     stn_no: "3259447",
@@ -245,6 +266,17 @@ export const dummyStops = [
     direction: "우실행",
   },
   {
+    stn_no: "3259440",
+    start_dt: 1735657200000,
+    stn_nm: "안도리사무소",
+    end_dt: 253402182000000,
+    gps_x: 127.804249,
+    gps_y: 34.487046,
+    stn_type: "OPEN",
+    stn_id: "ST00000047",
+    direction: "우실행",
+  },
+  {
     stn_no: "3259439",
     start_dt: 1735657200000,
     stn_nm: "안도리사무소",
@@ -256,14 +288,14 @@ export const dummyStops = [
     direction: "안도행",
   },
   {
-    stn_no: "3259440",
+    stn_no: "3259467",
     start_dt: 1735657200000,
-    stn_nm: "안도리사무소",
+    stn_nm: "여천",
     end_dt: 253402182000000,
-    gps_x: 127.804249,
-    gps_y: 34.487046,
+    gps_x: 127.753049,
+    gps_y: 34.549048,
     stn_type: "OPEN",
-    stn_id: "ST00000047",
+    stn_id: "ST00000018",
     direction: "우실행",
   },
   {
@@ -278,15 +310,24 @@ export const dummyStops = [
     direction: "함구미행",
   },
   {
-    stn_no: "3259467",
+    stn_no: "3259470",
     start_dt: 1735657200000,
-    stn_nm: "여천",
+    stn_nm: "여천항",
     end_dt: 253402182000000,
-    gps_x: 127.753049,
-    gps_y: 34.549048,
+    gps_x: 127.752925,
+    gps_y: 34.550299,
     stn_type: "OPEN",
-    stn_id: "ST00000018",
-    direction: "우실행",
+    stn_id: "ST00000056",
+  },
+  {
+    stn_no: "3259469",
+    start_dt: 1735657200000,
+    stn_nm: "여천항",
+    end_dt: 253402182000000,
+    gps_x: 127.75305,
+    gps_y: 34.550209,
+    stn_type: "OPEN",
+    stn_id: "ST00000055",
   },
   {
     stn_no: "3259436",
@@ -311,17 +352,6 @@ export const dummyStops = [
     direction: "삼거리식당",
   },
   {
-    stn_no: "3259430",
-    start_dt: 1735657200000,
-    stn_nm: "우학터미널",
-    end_dt: 253402182000000,
-    gps_x: 127.77042,
-    gps_y: 34.508571,
-    stn_type: "OPEN",
-    stn_id: "ST00000051",
-    direction: "우실행",
-  },
-  {
     stn_no: "3259429",
     start_dt: 1735657200000,
     stn_nm: "우학터미널",
@@ -333,14 +363,14 @@ export const dummyStops = [
     direction: "안도행",
   },
   {
-    stn_no: "3259441",
+    stn_no: "3259430",
     start_dt: 1735657200000,
-    stn_nm: "장지",
+    stn_nm: "우학터미널",
     end_dt: 253402182000000,
-    gps_x: 127.792945,
-    gps_y: 34.492097,
+    gps_x: 127.77042,
+    gps_y: 34.508571,
     stn_type: "OPEN",
-    stn_id: "ST00000046",
+    stn_id: "ST00000051",
     direction: "우실행",
   },
   {
@@ -353,6 +383,17 @@ export const dummyStops = [
     stn_type: "OPEN",
     stn_id: "ST00000045",
     direction: "안도행",
+  },
+  {
+    stn_no: "3259441",
+    start_dt: 1735657200000,
+    stn_nm: "장지",
+    end_dt: 253402182000000,
+    gps_x: 127.792945,
+    gps_y: 34.492097,
+    stn_type: "OPEN",
+    stn_id: "ST00000046",
+    direction: "우실행",
   },
   {
     stn_no: "3259456",
@@ -399,17 +440,6 @@ export const dummyStops = [
     direction: "직포행",
   },
   {
-    stn_no: "3259434",
-    start_dt: 1735657200000,
-    stn_nm: "학동마을",
-    end_dt: 253402182000000,
-    gps_x: 127.758013,
-    gps_y: 34.508981,
-    stn_type: "OPEN",
-    stn_id: "ST00000023",
-    direction: "우실행",
-  },
-  {
     stn_no: "3259433",
     start_dt: 1735657200000,
     stn_nm: "학동마을",
@@ -421,15 +451,15 @@ export const dummyStops = [
     direction: "직포행",
   },
   {
-    stn_no: "3259474",
+    stn_no: "3259434",
     start_dt: 1735657200000,
-    stn_nm: "함구미",
+    stn_nm: "학동마을",
     end_dt: 253402182000000,
-    gps_x: 127.70914,
-    gps_y: 34.536512,
+    gps_x: 127.758013,
+    gps_y: 34.508981,
     stn_type: "OPEN",
-    stn_id: "ST00000034",
-    direction: "함구미행",
+    stn_id: "ST00000023",
+    direction: "우실행",
   },
   {
     stn_no: "3259473",
@@ -443,14 +473,14 @@ export const dummyStops = [
     direction: "우실행",
   },
   {
-    stn_no: "3259476",
+    stn_no: "3259474",
     start_dt: 1735657200000,
-    stn_nm: "함구미선착장",
+    stn_nm: "함구미",
     end_dt: 253402182000000,
-    gps_x: 127.709475,
-    gps_y: 34.537603,
+    gps_x: 127.70914,
+    gps_y: 34.536512,
     stn_type: "OPEN",
-    stn_id: "ST00000036",
+    stn_id: "ST00000034",
     direction: "함구미행",
   },
   {
@@ -464,9 +494,21 @@ export const dummyStops = [
     stn_id: "ST00000035",
     direction: "우실행",
   },
+  {
+    stn_no: "3259476",
+    start_dt: 1735657200000,
+    stn_nm: "함구미선착장",
+    end_dt: 253402182000000,
+    gps_x: 127.709475,
+    gps_y: 34.537603,
+    stn_type: "OPEN",
+    stn_id: "ST00000036",
+    direction: "함구미행",
+  },
 ];
 
-// 더미 데이터
+// 더미 데이터 (참고용, 실제로는 API에서 가져옴)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dummyMarkers = [
   {
     gps_x: 127.766934,
@@ -3927,16 +3969,55 @@ export async function POST(request: NextRequest) {
 
     // 정류장 데이터 요청인 경우
     if (body.type === "stops") {
+      const response = await fetch(`${BACKEND_BASE_URL}/selectStationList.do`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        return NextResponse.json(
+          { error: "Backend request failed" },
+          { status: response.status }
+        );
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data: any[] = await response.json();
+
+      console.log(
+        "Station list backend response:",
+        JSON.stringify(data, null, 2)
+      );
+
       return NextResponse.json({
-        stops: dummyStops,
-        total: dummyStops.length,
+        stops: data,
+        total: data.length,
       });
     }
 
-    // 더미 데이터 반환
+    // 노드 마커 데이터 요청
+    const response = await fetch(`${BACKEND_BASE_URL}/selectNodeList.do`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Backend request failed" },
+        { status: response.status }
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data: any[] = await response.json();
+
+    console.log("Node list backend response:", JSON.stringify(data, null, 2));
+
     return NextResponse.json({
-      markers: dummyMarkers,
-      total: dummyMarkers.length,
+      markers: data,
+      total: data.length,
     });
   } catch (error) {
     console.error("Marker API error:", error);

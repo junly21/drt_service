@@ -8,16 +8,13 @@ export const callColumnDefs = [
     flex: 0,
     resizable: false,
   },
-  {
-    headerName: "배차순번",
-    field: "dispatch_seq",
-    minWidth: 120,
-  },
-  {
-    headerName: "노선ID",
-    field: "route_id",
-    minWidth: 120,
-  },
+  // {
+  //   headerName: "배차순번",
+  //   field: "dispatch_seq",
+  //   minWidth: 120,
+  //   sortable: true,
+  // },
+
   {
     headerName: "디바이스ID",
     field: "device_id",
@@ -29,12 +26,12 @@ export const callColumnDefs = [
     minWidth: 150,
   },
   {
-    headerName: "출발지ID",
+    headerName: "승차역ID",
     field: "start_point_id",
     minWidth: 120,
   },
   {
-    headerName: "종점ID",
+    headerName: "하차역ID",
     field: "end_point_id",
     minWidth: 120,
   },
@@ -64,5 +61,10 @@ export const callColumnDefs = [
     minWidth: 150,
     valueFormatter: (params: { value: unknown }) =>
       formatTimestamp(params.value as number | string | null | undefined),
+  },
+  {
+    headerName: "노선ID",
+    field: "route_id",
+    minWidth: 120,
   },
 ];

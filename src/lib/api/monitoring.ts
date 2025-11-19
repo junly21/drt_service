@@ -3,7 +3,10 @@
  */
 
 import { post } from "@/lib/api/client";
-import type { RouteNodeResponse, VehicleMarkerResponse } from "@/types/monitoring";
+import type {
+  RouteNodeResponse,
+  VehicleMarkerResponse,
+} from "@/types/monitoring";
 
 /**
  * 노선 노드 목록 조회 API

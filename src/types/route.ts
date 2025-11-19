@@ -19,5 +19,3 @@ export interface RouteListParams {
   page?: number;
   pageSize?: number;
 }
-
-

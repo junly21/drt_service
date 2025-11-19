@@ -7,7 +7,6 @@ import { getMarkerList, getStopList, type StopRow } from "@/lib/api/marker";
 import { markerColumnDefs } from "@/features/marker/columnDefs";
 import { stopSimpleColumnDefs } from "@/features/marker/stopColumnDefs";
 import type { MarkerRow } from "@/types/marker";
-import { dummyStops } from "@/app/api/markers/route";
 import { Map, View } from "ol";
 import { XYZ } from "ol/source";
 import { Tile } from "ol/layer";
@@ -236,35 +235,7 @@ export default function MarkerPage() {
 
       stopSource.addFeature(feature);
     });
-
-    // dummyStops 데이터도 지도에 추가
-    dummyStops.forEach((stop) => {
-      const coord = fromLonLat([stop.gps_x, stop.gps_y]);
-      const feature = new Feature({
-        geometry: new Point(coord),
-        stn_id: stop.stn_id,
-        stn_nm: stop.stn_nm,
-        stn_no: stop.stn_no,
-        stn_type: stop.stn_type,
-        gps_x: stop.gps_x,
-        gps_y: stop.gps_y,
-        direction: stop.direction,
-      });
-
-      feature.setStyle(
-        new Style({
-          image: new Icon({
-            src: "/busstop.png",
-            scale: 0.1,
-            anchor: [0.5, 1],
-          }),
-        })
-      );
-
-      stopSource.addFeature(feature);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allRows, stops]); // dummyStops는 상수이므로 의존성에서 제외
+  }, [allRows, stops]);
 
   // 선택된 마커 스타일 업데이트
   useEffect(() => {
@@ -353,7 +324,7 @@ export default function MarkerPage() {
 
   // 정류장 그리드 행 클릭 시 지도 중심 이동 + 하이라이트
   const handleStopRowClicked = useCallback(
-    (event: RowClickedEvent<(typeof dummyStops)[0]>) => {
+    (event: RowClickedEvent<StopRow>) => {
       const row = event.data;
       if (!row) return;
 
@@ -410,7 +381,10 @@ export default function MarkerPage() {
     [handleStopRowClicked]
   );
 
-  const stopRowData = useMemo(() => dummyStops, []);
+  const stopRowData = useMemo(
+    () => stops as unknown as Record<string, unknown>[],
+    [stops]
+  );
 
   return (
     <section
