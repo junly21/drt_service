@@ -27,5 +27,3 @@ export async function getRouteList(
 export async function getRouteById(id: string): Promise<RouteRow> {
   return post<RouteRow>(`/api/routes/${id}`, { route_id: id });
 }
-
-

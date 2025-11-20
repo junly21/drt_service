@@ -33,7 +33,7 @@ function StopTimelineCell({
         <div
           key={`${stop.point_id}-${stop.algh_dtm ?? "na"}`}
           className="flex w-24 flex-col rounded-lg border border-gray-200 px-3 py-2 shadow-sm">
-          <p className="text-xs font-medium text-gray-500">{stop.point_id}</p>
+          <p className="text-xs font-medium text-gray-500">{stop.stn_nm}</p>
           <p className="text-sm font-semibold text-gray-800">
             {stop.algh_dtm ? formatTimestamp(stop.algh_dtm, "HH:mm") : "-"}
           </p>
@@ -103,6 +103,7 @@ export default function DispatchPage() {
         routeMap.set(key, {
           dispatch_dt: row.dispatch_dt,
           route_id: row.route_id,
+          route_nm: row.route_nm ?? "",
           stops: [],
         });
       }
@@ -111,6 +112,7 @@ export default function DispatchPage() {
       if (routeRow && row.algh_dtm != null) {
         routeRow.stops.push({
           point_id: row.point_id,
+          stn_nm: row.stn_nm ?? "",
           algh_dtm: row.algh_dtm,
           dispatch_seq: row.dispatch_seq,
         });
@@ -136,8 +138,8 @@ export default function DispatchPage() {
           params.value ? formatTimestamp(params.value, "YYYY-MM-DD") : "-",
       },
       {
-        headerName: "노선ID",
-        field: "route_id",
+        headerName: "노선명",
+        field: "route_nm",
         pinned: "left",
         minWidth: 140,
         cellClass: "font-semibold",

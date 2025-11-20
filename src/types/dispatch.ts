@@ -5,7 +5,9 @@
 export interface DispatchRow extends Record<string, unknown> {
   dispatch_seq: number;
   point_id: string;
+  stn_nm: string;
   route_id: string;
+  route_nm: string;
   algh_dtm: number;
   remark: string | null;
   dispatch_dt: number;
@@ -29,6 +31,7 @@ export interface DispatchListParams {
 
 export interface DispatchStopEntry {
   point_id: string;
+  stn_nm: string;
   algh_dtm: number | null;
   dispatch_seq: number;
 }
@@ -36,5 +39,6 @@ export interface DispatchStopEntry {
 export interface DispatchGridRow extends Record<string, unknown> {
   dispatch_dt: number;
   route_id: string;
+  route_nm: string;
   stops: DispatchStopEntry[];
 }
