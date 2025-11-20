@@ -13,6 +13,8 @@ export interface OperLogRow extends Record<string, unknown> {
 
 export interface OperLogFilters {
   operDate?: string;
+  routeNm?: string;
+  vehicleNo?: string;
 }
 
 export interface OperLogListResponse {
@@ -22,6 +24,8 @@ export interface OperLogListResponse {
 
 export interface OperLogListParams {
   operDate?: string;
+  routeNm?: string;
+  vehicleNo?: string;
   page?: number;
   pageSize?: number;
 }

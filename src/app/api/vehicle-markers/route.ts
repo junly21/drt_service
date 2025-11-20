@@ -21,7 +21,10 @@ export async function POST(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any[] = await response.json();
 
-    console.log("Vehicle marker backend response:", JSON.stringify(data, null, 2));
+    console.log(
+      "Vehicle marker backend response:",
+      JSON.stringify(data, null, 2)
+    );
 
     return NextResponse.json({ vehicles: data, total: data.length });
   } catch (error) {
@@ -32,4 +35,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

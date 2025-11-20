@@ -22,7 +22,9 @@ export interface CallRow extends Record<string, unknown> {
 
 export interface CallFilters {
   callDatetime?: string;
-  deviceId?: string;
+  routeNm?: string;
+  startPointNm?: string;
+  endPointNm?: string;
 }
 
 export interface CallListResponse {
@@ -32,7 +34,9 @@ export interface CallListResponse {
 
 export interface CallListParams {
   callDatetime?: string;
-  deviceId?: string;
+  routeNm?: string;
+  startPointNm?: string;
+  endPointNm?: string;
   page?: number;
   pageSize?: number;
 }

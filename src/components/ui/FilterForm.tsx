@@ -53,8 +53,7 @@ export function FilterForm<T extends FieldValues>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const form = useForm<any>({
     defaultValues,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: schema ? zodResolver(schema as any) : undefined,
+    resolver: schema ? zodResolver(schema) : undefined,
   });
 
   const [dynamicOptions, setDynamicOptions] = useState<
@@ -224,7 +223,7 @@ export function FilterForm<T extends FieldValues>({
                         minWidth: 0,
                       }}>
                       {fields.map(renderField)}
-                      <div className="flex items-end justify-end">
+                      <div className="flex items-end justify-start">
                         <Button type="submit" className="rounded-lg">
                           조회
                         </Button>
@@ -252,7 +251,7 @@ export function FilterForm<T extends FieldValues>({
                       minWidth: 0,
                     }}>
                     {fields.map(renderField)}
-                    <div className="flex items-end justify-end">
+                    <div className="flex items-end justify-start">
                       <Button type="submit" className="rounded-lg">
                         조회
                       </Button>
@@ -303,7 +302,7 @@ export function FilterForm<T extends FieldValues>({
                     minWidth: 0,
                   }}>
                   {secondRowFields.map(renderField)}
-                  <div className="flex items-end justify-end">
+                  <div className="flex items-end justify-start">
                     <Button type="submit" className="rounded-lg">
                       조회
                     </Button>

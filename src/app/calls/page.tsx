@@ -39,10 +39,21 @@ export default function CallsPage() {
       const matchCallDatetime = filters.callDatetime
         ? String(r["call_dtm"] || "").includes(filters.callDatetime)
         : true;
-      const matchDeviceId = filters.deviceId
-        ? String(r["device_id"] || "").includes(filters.deviceId)
+      const matchRouteNm = filters.routeNm
+        ? String(r["route_nm"] || "").includes(filters.routeNm)
         : true;
-      return matchCallDatetime && matchDeviceId;
+      const matchStartPointNm = filters.startPointNm
+        ? String(r["start_point_nm"] || "").includes(filters.startPointNm)
+        : true;
+      const matchEndPointNm = filters.endPointNm
+        ? String(r["end_point_nm"] || "").includes(filters.endPointNm)
+        : true;
+      return (
+        matchCallDatetime &&
+        matchRouteNm &&
+        matchStartPointNm &&
+        matchEndPointNm
+      );
     });
   }, [allRows, filters]);
 

@@ -55,9 +55,9 @@ export default function RootLayout({
               <Link href="/selectOperLogList" className="hover:underline">
                 운행로그
               </Link>
-              <Link href="/stats" className="hover:underline">
+              {/* <Link href="/stats" className="hover:underline">
                 호출통계
-              </Link>
+              </Link> */}
             </nav>
           </div>
         </header>

@@ -90,7 +90,7 @@ export default function DispatchPage() {
         return routeCompare;
       }
 
-      return a.point_id.localeCompare(b.point_id);
+      return a.dispatch_seq - b.dispatch_seq;
     });
   }, [allRows, filters.dispatchDate]);
 
@@ -112,12 +112,13 @@ export default function DispatchPage() {
         routeRow.stops.push({
           point_id: row.point_id,
           algh_dtm: row.algh_dtm,
+          dispatch_seq: row.dispatch_seq,
         });
       }
     });
 
     routeMap.forEach((routeRow) => {
-      routeRow.stops.sort((a, b) => a.point_id.localeCompare(b.point_id));
+      routeRow.stops.sort((a, b) => a.dispatch_seq - b.dispatch_seq);
     });
 
     return Array.from(routeMap.values());
@@ -142,10 +143,10 @@ export default function DispatchPage() {
         cellClass: "font-semibold",
       },
       {
-        headerName: "정류장 algh 타임라인",
+        headerName: "배차표",
         field: "stops",
         flex: 1,
-        minWidth: 620,
+        minWidth: 2000,
         maxWidth: 9999,
         cellRenderer: StopTimelineCell,
       },

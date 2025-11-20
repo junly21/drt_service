@@ -12,8 +12,8 @@ export const defaultFilters: DispatchFilters = {
 export const dispatchFields: FieldConfig[] = [
   {
     name: "dispatchDate",
-    label: "배차일시",
+    label: "배차일자",
     type: "text",
-    placeholder: "배차일시 검색",
+    placeholder: "배차일자 검색",
   },
 ];

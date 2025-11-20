@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         return routeCompare;
       }
 
-      return String(a.point_id ?? "").localeCompare(String(b.point_id ?? ""));
+      return Number(a.dispatch_seq ?? 0) - Number(b.dispatch_seq ?? 0);
     });
 
     return NextResponse.json({

@@ -5,10 +5,7 @@ import Grid from "@/components/Grid";
 import { FilterForm } from "@/components/ui/FilterForm";
 import { getOperLogList } from "@/lib/api/operLog";
 import { operLogColumnDefs } from "@/features/operLog/columnDefs";
-import {
-  defaultFilters,
-  operLogFields,
-} from "@/features/operLog/fieldconfig";
+import { defaultFilters, operLogFields } from "@/features/operLog/fieldconfig";
 import type { OperLogFilters, OperLogRow } from "@/types/operLog";
 import { formatTimestamp } from "@/lib/utils";
 
@@ -42,7 +39,13 @@ export default function OperLogPage() {
             filters.operDate
           )
         : true;
-      return matchOperDate;
+      const matchRouteNm = filters.routeNm
+        ? String(row["route_nm"] || "").includes(filters.routeNm)
+        : true;
+      const matchVehicleNo = filters.vehicleNo
+        ? String(row["vehicle_no"] || "").includes(filters.vehicleNo)
+        : true;
+      return matchOperDate && matchRouteNm && matchVehicleNo;
     });
   }, [rows, filters]);
 
@@ -82,4 +85,3 @@ export default function OperLogPage() {
     </section>
   );
 }
-

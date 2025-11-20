@@ -28,20 +28,20 @@ export const operLogColumnDefs = [
     field: "vehicle_no",
     minWidth: 140,
   },
+  // {
+  //   headerName: "차량ID",
+  //   field: "vehicle_id",
+  //   minWidth: 140,
+  // },
   {
-    headerName: "차량ID",
-    field: "vehicle_id",
-    minWidth: 140,
-  },
-  {
-    headerName: "속도(km/h)",
+    headerName: "속도(m/s)",
     field: "speed",
     minWidth: 120,
     valueFormatter: (params: { value: number }) =>
       params.value != null ? Number(params.value).toFixed(2) : "",
   },
   {
-    headerName: "방향",
+    headerName: "방위각",
     field: "heading",
     minWidth: 100,
   },
@@ -56,13 +56,13 @@ export const operLogColumnDefs = [
     minWidth: 140,
   },
   {
-    headerName: "배차일시",
+    headerName: "배차일자",
     field: "dispatch_dt",
     minWidth: 160,
     valueFormatter: (params: { value: unknown }) =>
       formatTimestamp(
         params.value as number | string | null | undefined,
-        "YYYY-MM-DD HH:mm:ss"
+        "YYYY-MM-DD"
       ),
   },
 ];

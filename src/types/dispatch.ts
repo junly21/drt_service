@@ -30,6 +30,7 @@ export interface DispatchListParams {
 export interface DispatchStopEntry {
   point_id: string;
   algh_dtm: number | null;
+  dispatch_seq: number;
 }
 
 export interface DispatchGridRow extends Record<string, unknown> {
