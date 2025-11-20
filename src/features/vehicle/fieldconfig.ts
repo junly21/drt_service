@@ -17,4 +17,3 @@ export const vehicleFields: FieldConfig[] = [
     placeholder: "차량번호",
   },
 ];
-

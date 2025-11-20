@@ -37,7 +37,7 @@ export default function VehiclePage() {
   const rowData = useMemo(() => {
     return allRows.filter((r) => {
       const matchVehicle = filters.vehicleNo
-        ? String(r["차량번호"]).includes(filters.vehicleNo)
+        ? String(r["vehicle_no"]).includes(filters.vehicleNo)
         : true;
       return matchVehicle;
     });

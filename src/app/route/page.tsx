@@ -79,9 +79,9 @@ export default function RoutePage() {
         </div>
 
         {/* 지도 영역 (1/3) */}
-        <div className="flex-1">
+        {/* <div className="flex-1">
           <VWorldMap mapId="route-map" className="h-full" />
-        </div>
+        </div> */}
       </div>
     </section>
   );
