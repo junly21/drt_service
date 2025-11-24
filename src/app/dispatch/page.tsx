@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ColDef, ICellRendererParams } from "ag-grid-community";
 
 import Grid from "@/components/Grid";
@@ -68,7 +68,7 @@ export default function DispatchPage() {
     isVisible: false,
   });
 
-  const fetchDispatchList = async () => {
+  const fetchDispatchList = useCallback(async () => {
     setLoading(true);
     try {
       const response = await getDispatchList(filters);
@@ -83,11 +83,11 @@ export default function DispatchPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     void fetchDispatchList();
-  }, [filters]);
+  }, [fetchDispatchList]);
 
   const handleSaveDispatchTime = async (params: DispatchTimeUpdatePayload) => {
     try {
@@ -111,14 +111,11 @@ export default function DispatchPage() {
   };
 
   const filteredRows = useMemo(() => {
-    const keyword = filters.dispatchDate?.trim();
-    const filtered = keyword
+    const selectedDate = filters.dispatchDate?.trim();
+    const filtered = selectedDate
       ? allRows.filter((row) => {
-          const formatted = formatTimestamp(
-            row.dispatch_dt,
-            "YYYY-MM-DD HH:mm:ss"
-          );
-          return formatted.includes(keyword);
+          const formatted = formatTimestamp(row.dispatch_dt, "YYYY-MM-DD");
+          return formatted === selectedDate;
         })
       : allRows;
 
