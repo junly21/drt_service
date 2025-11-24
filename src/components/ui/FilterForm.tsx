@@ -53,7 +53,7 @@ export function FilterForm<T extends FieldValues>({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const form = useForm<any>({
     defaultValues,
-    resolver: schema ? zodResolver(schema) : undefined,
+    resolver: schema ? zodResolver(schema as any) : undefined,
   });
 
   const [dynamicOptions, setDynamicOptions] = useState<

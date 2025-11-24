@@ -45,11 +45,11 @@ export const callColumnDefs = [
     field: "rsv_num",
     minWidth: 140,
   },
-  {
-    headerName: "기존탑승인원",
-    field: "curren_reserved",
-    minWidth: 140,
-  },
+  // {
+  //   headerName: "기존탑승인원",
+  //   field: "curren_reserved",
+  //   minWidth: 140,
+  // },
   {
     headerName: "결제수단",
     field: "payment",

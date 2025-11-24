@@ -45,3 +45,21 @@ export async function getDispatchById(
     dispatch_seq: dispatchSeq,
   });
 }
+
+export interface DispatchTimeUpdatePayload {
+  route_id: string;
+  dispatch_dt: string;
+  algh_dtm: string;
+  old_vehicle_id: string;
+  new_vehicle_id: string;
+}
+
+/**
+ * 배차시간 편집 API
+ * @param params 편집 파라미터
+ */
+export async function updateDispatchTime(
+  params: DispatchTimeUpdatePayload
+): Promise<void> {
+  return post<void>("/api/updatetime", params);
+}

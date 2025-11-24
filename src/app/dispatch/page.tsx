@@ -5,11 +5,18 @@ import type { ColDef, ICellRendererParams } from "ag-grid-community";
 
 import Grid from "@/components/Grid";
 import { FilterForm } from "@/components/ui/FilterForm";
+import { Button } from "@/components/ui/button";
+import { Toast } from "@/components/ui/Toast";
+import { DispatchTimeEditModal } from "@/components/DispatchTimeEditModal";
 import {
   defaultFilters,
   dispatchFields,
 } from "@/features/dispatch/fieldconfig";
-import { getDispatchList } from "@/lib/api/dispatch";
+import {
+  getDispatchList,
+  updateDispatchTime,
+  type DispatchTimeUpdatePayload,
+} from "@/lib/api/dispatch";
 import { formatTimestamp } from "@/lib/utils";
 import type {
   DispatchFilters,
@@ -49,23 +56,59 @@ export default function DispatchPage() {
   const [filters, setFilters] = useState<DispatchFilters>(defaultFilters);
   const [allRows, setAllRows] = useState<DispatchRow[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<DispatchGridRow | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error" | "info";
+    isVisible: boolean;
+  }>({
+    message: "",
+    type: "info",
+    isVisible: false,
+  });
+
+  const fetchDispatchList = async () => {
+    setLoading(true);
+    try {
+      const response = await getDispatchList(filters);
+      setAllRows(response.dispatches);
+    } catch (error) {
+      console.error("Failed to fetch dispatch list:", error);
+      setToast({
+        message: "배차 목록을 불러오는데 실패했습니다.",
+        type: "error",
+        isVisible: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchDispatchList = async () => {
-      setLoading(true);
-      try {
-        const response = await getDispatchList(filters);
-        setAllRows(response.dispatches);
-      } catch (error) {
-        console.error("Failed to fetch dispatch list:", error);
-        // TODO: 사용자 피드백 (토스트 등) 추가
-      } finally {
-        setLoading(false);
-      }
-    };
-
     void fetchDispatchList();
   }, [filters]);
+
+  const handleSaveDispatchTime = async (params: DispatchTimeUpdatePayload) => {
+    try {
+      await updateDispatchTime(params);
+      setToast({
+        message: "배차시간이 성공적으로 수정되었습니다.",
+        type: "success",
+        isVisible: true,
+      });
+      // 그리드 새로고침
+      await fetchDispatchList();
+    } catch (error) {
+      console.error("Failed to update dispatch time:", error);
+      setToast({
+        message: "배차시간 수정에 실패했습니다.",
+        type: "error",
+        isVisible: true,
+      });
+      throw error;
+    }
+  };
 
   const filteredRows = useMemo(() => {
     const keyword = filters.dispatchDate?.trim();
@@ -104,6 +147,8 @@ export default function DispatchPage() {
           dispatch_dt: row.dispatch_dt,
           route_id: row.route_id,
           route_nm: row.route_nm ?? "",
+          vehicle_id: row.vehicle_id,
+          vehicle_no: row.vehicle_no ?? null,
           stops: [],
         });
       }
@@ -170,6 +215,13 @@ export default function DispatchPage() {
         className="mb-4"
       />
 
+      {/* 배차시간 편집 버튼 */}
+      <div className="mb-4 flex justify-end">
+        <Button onClick={() => setIsModalOpen(true)} disabled={!selectedRow}>
+          배차시간 편집
+        </Button>
+      </div>
+
       {loading ? (
         <div
           className="flex items-center justify-center"
@@ -181,12 +233,48 @@ export default function DispatchPage() {
           rowData={groupedRows}
           columnDefs={columnDefs}
           gridRef={gridRef}
-          gridOptions={{}}
+          gridOptions={{
+            rowSelection: "single",
+            suppressRowClickSelection: false,
+            onRowClicked: (params) => {
+              if (params.data) {
+                setSelectedRow(params.data);
+              }
+            },
+            getRowStyle: (params) => {
+              if (
+                selectedRow &&
+                params.data?.route_id === selectedRow.route_id &&
+                params.data?.dispatch_dt === selectedRow.dispatch_dt
+              ) {
+                return { backgroundColor: "#dbeafe" }; // blue-100
+              }
+              return undefined;
+            },
+          }}
           height={"calc(100vh - 400px)"}
           enableNumberColoring={true}
           rowHeight={60}
         />
       )}
+
+      {/* 배차시간 편집 모달 */}
+      <DispatchTimeEditModal
+        open={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        selectedRow={selectedRow}
+        onSave={handleSaveDispatchTime}
+      />
+
+      {/* 토스트 알림 */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast((prev) => ({ ...prev, isVisible: false }))}
+      />
     </section>
   );
 }

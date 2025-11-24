@@ -12,6 +12,7 @@ export interface DispatchRow extends Record<string, unknown> {
   remark: string | null;
   dispatch_dt: number;
   vehicle_id: string;
+  vehicle_no?: string | null;
 }
 
 export interface DispatchFilters {
@@ -40,5 +41,7 @@ export interface DispatchGridRow extends Record<string, unknown> {
   dispatch_dt: number;
   route_id: string;
   route_nm: string;
+  vehicle_id: string;
+  vehicle_no?: string | null;
   stops: DispatchStopEntry[];
 }

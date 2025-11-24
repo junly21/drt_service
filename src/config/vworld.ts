@@ -8,4 +8,4 @@
  * 없으면 기본 키를 사용합니다.
  */
 export const VWORLD_API_KEY =
-  process.env.VWORLD_API_KEY || "1A2BB1EC-4324-34AA-B2D2-A9C06A2B5928";
+  process.env.VWORLD_API_KEY || "87D83D87-66B3-3AAC-B518-4D1103F9ACDA";

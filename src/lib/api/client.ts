@@ -52,7 +52,9 @@ export async function apiClient<T>(
   };
 
   try {
+    console.log("[apiClient] Fetching:", endpoint, "with config:", config);
     const response = await fetch(endpoint, config);
+    console.log("[apiClient] Response status:", response.status, response.statusText);
 
     if (!response.ok) {
       throw new ApiError(
