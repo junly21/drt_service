@@ -34,11 +34,11 @@ export const operLogColumnDefs = [
   //   minWidth: 140,
   // },
   {
-    headerName: "속도(m/s)",
+    headerName: "속도(km/h)",
     field: "speed",
     minWidth: 120,
     valueFormatter: (params: { value: number }) =>
-      params.value != null ? Number(params.value).toFixed(2) : "",
+      params.value != null ? (Number(params.value) * 3.6).toFixed(2) : "",
   },
   {
     headerName: "방위각",

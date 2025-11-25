@@ -276,8 +276,9 @@ export default function MonitoringPage() {
           speed: vehicle.speed,
         });
 
-        // heading을 라디안으로 변환 (OpenLayers는 라디안 사용, 0도가 북쪽)
-        const rotation = ((vehicle.heading - 90) * Math.PI) / 180;
+        // heading을 라디안으로 변환 (OpenLayers는 라디안 사용)
+        // 시계방향으로 90도 추가 회전 필요 (아이콘 기본 방향 보정)
+        const rotation = (vehicle.heading * Math.PI) / 180;
 
         feature.setStyle(
           new Style({
@@ -376,10 +377,12 @@ export default function MonitoringPage() {
             date.getMinutes()
           ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
+          // m/s를 km/h로 변환 (1 m/s = 3.6 km/h)
+          const speedKmh = speed * 3.6;
           tooltipElement.innerHTML = `
             <div class="font-semibold">${vehicleNo}</div>
             <div>차량ID: ${vehicleId}</div>
-            <div>속도: ${speed.toFixed(2)} km/h</div>
+            <div>속도: ${speedKmh.toFixed(2)} km/h</div>
             <div>방향: ${heading}°</div>
             <div>시간: ${dateStr}</div>
           `;
