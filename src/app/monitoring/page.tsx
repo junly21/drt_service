@@ -280,10 +280,14 @@ export default function MonitoringPage() {
         // 시계방향으로 90도 추가 회전 필요 (아이콘 기본 방향 보정)
         const rotation = (vehicle.heading * Math.PI) / 180;
 
+        // vehicle_id에 따라 다른 이미지 사용
+        const iconSrc =
+          vehicle.vehicle_id === "vh_00000002" ? "/bus2.png" : "/bus.png";
+
         feature.setStyle(
           new Style({
             image: new Icon({
-              src: "/bus.png",
+              src: iconSrc,
               scale: 0.3,
               rotation: rotation,
               anchor: [0.5, 0.5],
@@ -454,7 +458,29 @@ export default function MonitoringPage() {
         <div
           id="monitoring-map"
           className="relative overflow-hidden rounded-[24px] border border-gray-200 h-full w-full"
-        />
+        >
+          {/* 범례 */}
+          <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 z-10">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <img
+                  src="/bus.png"
+                  alt="1호차"
+                  className="w-8 h-8 object-contain"
+                />
+                <span className="text-sm">1호차</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <img
+                  src="/bus2.png"
+                  alt="2호차"
+                  className="w-8 h-8 object-contain"
+                />
+                <span className="text-sm">2호차</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
